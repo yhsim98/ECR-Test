@@ -1,23 +1,32 @@
-
-node {
+//
+// node {
+//      stage('Clone repository') {
+//          steps {
+//                          echo 'Clone'
+//                          git branch: 'master', credentialsId: '', url: 'https://github.com/yhsim98/ECR-Test.git'
+//                      }
+//      }
+//
+//      stage('Build image') {
+//          app = docker.build("884868906286.dkr.ecr.ap-northeast-2.amazonaws.com/test")
+//      }
+//
+//      stage('Push image') {
+//          sh 'rm  ~/.dockercfg || true'
+//          sh 'rm ~/.docker/config.json || true'
+//
+//          docker.withRegistry('https://884868906286.dkr.ecr.ap-northeast-2.amazonaws.com', 'ecr:ap-northeast-2:ecr') {
+//              app.push("${env.BUILD_NUMBER}")
+//              app.push("latest")
+//      }
+//   }
+// }
+ node {
      stage('Clone repository') {
-         steps {
-                         echo 'Clone'
-                         git branch: 'master', credentialsId: '', url: 'https://github.com/yhsim98/ECR-Test.git'
-                     }
+         checkout scm #repository를 jenkins workspace로 clone
      }
 
      stage('Build image') {
-         app = docker.build("884868906286.dkr.ecr.ap-northeast-2.amazonaws.com/test")
+         app = docker.build("teichae/jenkins:$BUILD_NUMBER") #docker image build 및 이름을 teicahe/jenkins:빌드번호 설정
      }
-
-     stage('Push image') {
-         sh 'rm  ~/.dockercfg || true'
-         sh 'rm ~/.docker/config.json || true'
-
-         docker.withRegistry('https://884868906286.dkr.ecr.ap-northeast-2.amazonaws.com', 'ecr:ap-northeast-2:ecr') {
-             app.push("${env.BUILD_NUMBER}")
-             app.push("latest")
-     }
-  }
 }
