@@ -1,12 +1,5 @@
 
 node {
-     stage('Clone repository') {
-         steps {
-                         echo 'Clone'
-                         git branch: 'master', credentialsId: '', url: 'https://github.com/yhsim98/ECR-Test.git'
-                     }
-     }
-
      stage('Build image') {
          app = docker.build("884868906286.dkr.ecr.ap-northeast-2.amazonaws.com/test")
      }
