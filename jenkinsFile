@@ -1,25 +1,21 @@
-#이미지 빌드시 이름을 ECR 쪽으로 변경
-app = docker.build("public.ecr.aws/j7y6o5w0/asdf")
-
-# ECR에서 생성한 Repository URI로 변경 및 Jenkins AWS Credential으로 변경
-docker.withRegistry('https://********.dkr.ecr.ap-northeast-2.amazonaws.com', 'ecr:ap-northeast-2:teichae-ecr-credentials')
-
-# Full Code
 
 node {
      stage('Clone repository') {
-         checkout scm
+         steps {
+                         echo 'Clone'
+                         git branch: 'master', credentialsId: '', url: 'https://github.com/yhsim98/ECR-Test.git'
+                     }
      }
 
      stage('Build image') {
-         app = docker.build("********.dkr.ecr.ap-northeast-2.amazonaws.com/teichae")
+         app = docker.build("884868906286.dkr.ecr.ap-northeast-2.amazonaws.com/test")
      }
 
      stage('Push image') {
          sh 'rm  ~/.dockercfg || true'
          sh 'rm ~/.docker/config.json || true'
 
-         docker.withRegistry('https://********.dkr.ecr.ap-northeast-2.amazonaws.com', 'ecr:ap-northeast-2:teichae-ecr-credentials') {
+         docker.withRegistry('https://884868906286.dkr.ecr.ap-northeast-2.amazonaws.com', 'ecr:ap-northeast-2:ecr') {
              app.push("${env.BUILD_NUMBER}")
              app.push("latest")
      }
