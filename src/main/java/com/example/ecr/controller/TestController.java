@@ -12,6 +12,7 @@ public class TestController {
     public Map<String, String> test() {
         Map<String, String> map = new HashMap<>();
         map.put("key", "value");
+        map.put("asdf", "zxcv");
         return map;
     }
 }
