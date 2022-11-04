@@ -1,7 +1,7 @@
 
 node {
      stage('Build image') {
-         app = docker.build("https://884868906286.dkr.ecr.ap-northeast-2.amazonaws.com/${env.BUILD_NUMBER}")
+         app = docker.build("https://884868906286.dkr.ecr.ap-northeast-2.amazonaws.com/test")
      }
 
      stage('Push image') {
